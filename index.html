@@ -11,9 +11,7 @@
     <!-- FontAwesome untuk ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
+        body { font-family: 'Poppins', sans-serif; }
     </style>
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen pb-16">
@@ -27,32 +25,35 @@
                 </div>
                 <div>
                     <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-white">Rota Badminton</h1>
-                    <p class="text-xs text-emerald-100 font-medium tracking-wider uppercase">Double Pairing Manager</p>
+                    <p class="text-xs text-emerald-100 font-medium tracking-wider uppercase">Host & Double Pairing Manager</p>
                 </div>
             </div>
             <span class="text-xs bg-emerald-800/60 backdrop-blur-xs border border-emerald-500/30 px-3.5 py-1.5 rounded-xl font-medium tracking-wide flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Sistem Rotasi Adil
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Host Control Active
             </span>
         </div>
     </header>
 
     <main class="max-w-4xl mx-auto px-4 space-y-6">
 
-        <!-- Tab Navigasi -->
-        <div class="flex border-b border-slate-200 bg-white rounded-2xl shadow-xs overflow-hidden p-1 gap-1">
-            <button onclick="switchTab('pemain')" id="tab-pemain" class="flex-1 py-3 text-center text-xs sm:text-sm font-semibold text-emerald-600 rounded-xl bg-emerald-50/80 transition flex items-center justify-center gap-1.5">
-                <i class="fa-solid fa-users"></i> Pemain & Sesi
+        <!-- Tab Navigasi (Sekarang dibagi jadi 4 menu agar lebih rapi) -->
+        <div class="grid grid-cols-2 sm:flex border-b border-slate-200 bg-white rounded-2xl shadow-xs overflow-hidden p-1 gap-1">
+            <button onclick="switchTab('peserta')" id="tab-peserta" class="py-3 px-3 text-center text-xs sm:text-sm font-semibold text-emerald-600 rounded-xl bg-emerald-50/80 transition flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-users"></i> Peserta
             </button>
-            <button onclick="switchTab('jadwal')" id="tab-jadwal" class="flex-1 py-3 text-center text-xs sm:text-sm font-semibold text-slate-500 hover:text-emerald-600 rounded-xl transition flex items-center justify-center gap-1.5">
-                <i class="fa-solid fa-calendar-days"></i> Jadwal & Skor
+            <button onclick="switchTab('keuangan')" id="tab-keuangan" class="py-3 px-3 text-center text-xs sm:text-sm font-semibold text-slate-500 hover:text-emerald-600 rounded-xl transition flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-wallet"></i> Keuangan
             </button>
-            <button onclick="switchTab('klasemen')" id="tab-klasemen" class="flex-1 py-3 text-center text-xs sm:text-sm font-semibold text-slate-500 hover:text-emerald-600 rounded-xl transition flex items-center justify-center gap-1.5">
+            <button onclick="switchTab('jadwal')" id="tab-jadwal" class="py-3 px-3 text-center text-xs sm:text-sm font-semibold text-slate-500 hover:text-emerald-600 rounded-xl transition flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-calendar-days"></i> Jadwal
+            </button>
+            <button onclick="switchTab('klasemen')" id="tab-klasemen" class="py-3 px-3 text-center text-xs sm:text-sm font-semibold text-slate-500 hover:text-emerald-600 rounded-xl transition flex items-center justify-center gap-1.5">
                 <i class="fa-solid fa-trophy"></i> Klasemen
             </button>
         </div>
 
-        <!-- 1. PANEL PEMAIN & PENGATURAN SESI -->
-        <section id="panel-pemain" class="space-y-4">
+        <!-- 1. PANEL PESERTA & PENGATURAN -->
+        <section id="panel-peserta" class="space-y-4">
             <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-xs border border-slate-100 space-y-4">
                 <h2 class="text-base sm:text-lg font-bold text-slate-700 flex items-center gap-2">
                     <div class="w-8 h-8 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
@@ -74,44 +75,45 @@
                         <input type="time" id="inputJamSelesai" value="22:00" class="w-full border border-slate-200 bg-slate-50/50 rounded-xl px-4 py-2.5 text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
                     </div>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-500 uppercase mb-1.5">Durasi per Match (Menit)</label>
-                        <input type="number" id="inputDurasiPartai" value="15" min="5" class="w-full border border-slate-200 bg-slate-50/50 rounded-xl px-4 py-2.5 text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-500 uppercase mb-1.5">Target Batas Main (Ronde/Pemain)</label>
-                        <select id="inputBatasRonde" class="w-full border border-slate-200 bg-slate-50/50 rounded-xl px-4 py-2.5 text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
-                            <option value="all">Habiskan Semua Putaran Rota</option>
-                            <option value="auto" selected>Otomatis Sesuaikan Jam Sewa</option>
-                            <option value="3">Batasi Maksimal 3 Kali Main</option>
-                            <option value="4">Batasi Maksimal 4 Kali Main</option>
-                            <option value="5">Batasi Maksimal 5 Kali Main</option>
-                            <option value="6">Batasi Maksimal 6 Kali Main</option>
-                        </select>
-                    </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-1.5">Target Batas Main</label>
+                    <select id="inputBatasRonde" class="w-full border border-slate-200 bg-slate-50/50 rounded-xl px-4 py-2.5 text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
+                        <option value="all">Habiskan Semua Putaran Rota</option>
+                        <option value="auto" selected>Otomatis Sesuaikan Jam Sewa</option>
+                        <option value="3">Maksimal 3 Kali Main</option>
+                        <option value="4">Maksimal 4 Kali Main</option>
+                        <option value="5">Maksimal 5 Kali Main</option>
+                    </select>
                 </div>
             </div>
 
-            <!-- Daftar Pemain -->
-            <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-xs border border-slate-100">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-3">
-                    <h2 class="text-base sm:text-lg font-bold text-slate-700">Daftar Pemain</h2>
-                    <button onclick="bagikanPemainKeWhatsApp()" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center justify-center gap-2 shadow-sm">
-                        <i class="fa-brands fa-whatsapp text-base"></i> Share List Pemain ke WA
+            <!-- Daftar Peserta -->
+            <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-xs border border-slate-100 space-y-4">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                    <h2 class="text-base sm:text-lg font-bold text-slate-700">Daftar Peserta Mabar</h2>
+                    <button onclick="bagikanPesertaKeWhatsApp()" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center justify-center gap-2 shadow-sm">
+                        <i class="fa-brands fa-whatsapp text-base"></i> Share List Peserta ke WA
                     </button>
                 </div>
                 
-                <div class="flex flex-col sm:flex-row gap-2 mb-4">
-                    <div class="relative flex-1">
+                <div class="grid grid-cols-1 sm:grid-cols-12 gap-2">
+                    <div class="relative sm:col-span-6">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
                             <i class="fa-solid fa-user text-xs"></i>
                         </span>
-                        <input type="text" id="inputNamaPemain" placeholder="Ketik nama pemain..." class="w-full border border-slate-200 bg-slate-50/50 rounded-xl pl-10 pr-4 py-2.5 text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
+                        <input type="text" id="inputNamaPemain" placeholder="Nama peserta..." class="w-full border border-slate-200 bg-slate-50/50 rounded-xl pl-10 pr-4 py-2.5 text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
                     </div>
-                    <button onclick="tambahPemain()" class="bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white px-6 py-2.5 rounded-xl text-sm font-semibold shadow-sm shadow-emerald-600/20 transition flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-plus text-xs"></i> Tambah Pemain
-                    </button>
+                    <div class="sm:col-span-3">
+                        <select id="inputTipePemain" class="w-full border border-slate-200 bg-slate-50/50 rounded-xl px-3 py-2.5 text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
+                            <option value="Member">Member</option>
+                            <option value="Visitor">Visitor</option>
+                        </select>
+                    </div>
+                    <div class="sm:col-span-3">
+                        <button onclick="tambahPemain()" class="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white py-2.5 rounded-xl text-sm font-semibold shadow-sm shadow-emerald-600/20 transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-plus text-xs"></i> Tambah
+                        </button>
+                    </div>
                 </div>
 
                 <div class="overflow-x-auto">
@@ -119,21 +121,17 @@
                         <thead>
                             <tr class="border-b border-slate-100 text-xs text-slate-400 uppercase tracking-wider">
                                 <th class="py-2.5 px-3">No</th>
-                                <th class="py-2.5 px-3">Nama Pemain</th>
+                                <th class="py-2.5 px-3">Nama</th>
+                                <th class="py-2.5 px-3">Tipe</th>
                                 <th class="py-2.5 px-3 text-center">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody id="tabelPemainBody" class="divide-y divide-slate-50 text-sm">
-                            <!-- Data pemain masuk sini -->
-                        </tbody>
+                        <tbody id="tabelPesertaBody" class="divide-y divide-slate-50 text-sm"></tbody>
                     </table>
                 </div>
 
-                <div class="mt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pt-4 border-t border-slate-100">
-                    <div class="space-y-1">
-                        <span class="text-xs sm:text-sm text-slate-500 block">Total Pemain: <strong id="jumlahPemain" class="text-slate-800">0</strong> orang</span>
-                        <div id="infoKapasitas" class="text-xs text-emerald-600 font-medium"></div>
-                    </div>
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-3 pt-4 border-t border-slate-100">
+                    <span class="text-xs sm:text-sm text-slate-500">Total Peserta: <strong id="jumlahPemain" class="text-slate-800">0</strong> orang</span>
                     <button onclick="generateJadwal()" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 active:scale-95 text-white px-6 py-3 rounded-xl text-sm font-semibold shadow-sm shadow-blue-600/20 transition flex items-center justify-center gap-2">
                         <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Jadwal Rota
                     </button>
@@ -141,7 +139,57 @@
             </div>
         </section>
 
-        <!-- 2. PANEL JADWAL & SKOR -->
+        <!-- 2. PANEL KEUANGAN (KAS) -->
+        <section id="panel-keuangan" class="hidden space-y-4">
+            <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-xs border border-slate-100 space-y-4">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                    <h2 class="text-base sm:text-lg font-bold text-slate-700 flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
+                            <i class="fa-solid fa-wallet text-sm"></i>
+                        </div>
+                        Rekap Keuangan & Status Iuran
+                    </h2>
+                    <button onclick="bagikanKeuanganKeWhatsApp()" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center justify-center gap-2 shadow-sm">
+                        <i class="fa-brands fa-whatsapp text-base"></i> Share Kas ke WA
+                    </button>
+                </div>
+
+                <!-- Pengaturan Tarif -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200/60">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Tarif Member (Rp)</label>
+                        <input type="number" id="tarifMember" value="35000" step="5000" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Tarif Visitor (Rp)</label>
+                        <input type="number" id="tarifVisitor" value="45000" step="5000" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                </div>
+
+                <!-- Tabel Keuangan -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-100 text-xs text-slate-400 uppercase tracking-wider">
+                                <th class="py-2.5 px-3">No</th>
+                                <th class="py-2.5 px-3">Nama</th>
+                                <th class="py-2.5 px-3">Tipe & Nominal</th>
+                                <th class="py-2.5 px-3 text-center">Status Bayar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelKeuanganBody" class="divide-y divide-slate-50 text-sm"></tbody>
+                    </table>
+                </div>
+
+                <!-- Total Kas -->
+                <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-2xl flex justify-between items-center">
+                    <span class="text-xs sm:text-sm font-semibold text-emerald-800">Total Kas Terkumpul (Lunas):</span>
+                    <span id="totalKasLunas" class="text-base sm:text-lg font-bold text-emerald-700">Rp 0</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. PANEL JADWAL & SKOR -->
         <section id="panel-jadwal" class="hidden space-y-4">
             <div class="bg-white p-4 sm:p-5 rounded-2xl shadow-xs border border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                 <h2 class="text-base sm:text-lg font-bold text-slate-700">Daftar Partai / Match</h2>
@@ -154,12 +202,10 @@
                     </button>
                 </div>
             </div>
-            <div id="containerJadwal" class="space-y-4">
-                <!-- List Match per Ronde masuk sini -->
-            </div>
+            <div id="containerJadwal" class="space-y-4"></div>
         </section>
 
-        <!-- 3. PANEL KLASEMEN -->
+        <!-- 4. PANEL KLASEMEN -->
         <section id="panel-klasemen" class="hidden space-y-4">
             <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-xs border border-slate-100 space-y-4">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
@@ -181,9 +227,7 @@
                                 <th class="py-3 px-3 text-center">Total Poin</th>
                             </tr>
                         </thead>
-                        <tbody id="tabelKlasemenBody" class="divide-y divide-slate-50 text-sm">
-                            <!-- Data klasemen masuk sini -->
-                        </tbody>
+                        <tbody id="tabelKlasemenBody" class="divide-y divide-slate-50 text-sm"></tbody>
                     </table>
                 </div>
             </div>
@@ -196,7 +240,10 @@
         let state = {
             pemain: JSON.parse(localStorage.getItem('rota_pemain')) || [],
             jadwal: JSON.parse(localStorage.getItem('rota_jadwal')) || [],
-            settings: JSON.parse(localStorage.getItem('rota_settings')) || { lapangan: 3, jamMulai: '19:00', jamSelesai: '22:00', durasi: 15, batasRonde: 'auto' }
+            settings: JSON.parse(localStorage.getItem('rota_settings')) || { 
+                lapangan: 3, jamMulai: '19:00', jamSelesai: '22:00', durasi: 15, batasRonde: 'auto',
+                tarifMember: 35000, tarifVisitor: 45000 
+            }
         };
 
         let lastSortedStats = [];
@@ -204,18 +251,20 @@
         document.getElementById('inputJumlahLapangan').value = state.settings.lapangan;
         document.getElementById('inputJamMulai').value = state.settings.jamMulai;
         document.getElementById('inputJamSelesai').value = state.settings.jamSelesai;
-        document.getElementById('inputDurasiPartai').value = state.settings.durasi;
+        document.getElementById('tarifMember').value = state.settings.tarifMember;
+        document.getElementById('tarifVisitor').value = state.settings.tarifVisitor;
         document.getElementById('inputBatasRonde').value = state.settings.batasRonde;
 
-        ['inputJumlahLapangan', 'inputJamMulai', 'inputJamSelesai', 'inputDurasiPartai', 'inputBatasRonde'].forEach(id => {
+        ['inputJumlahLapangan', 'inputJamMulai', 'inputJamSelesai', 'tarifMember', 'tarifVisitor', 'inputBatasRonde'].forEach(id => {
             document.getElementById(id).addEventListener('change', () => {
                 state.settings.lapangan = parseInt(document.getElementById('inputJumlahLapangan').value) || 1;
                 state.settings.jamMulai = document.getElementById('inputJamMulai').value;
                 state.settings.jamSelesai = document.getElementById('inputJamSelesai').value;
-                state.settings.durasi = parseInt(document.getElementById('inputDurasiPartai').value) || 15;
+                state.settings.tarifMember = parseInt(document.getElementById('tarifMember').value) || 0;
+                state.settings.tarifVisitor = parseInt(document.getElementById('tarifVisitor').value) || 0;
                 state.settings.batasRonde = document.getElementById('inputBatasRonde').value;
                 saveData();
-                updateKalkulatorInfo();
+                updateKeuangan();
             });
         });
 
@@ -226,82 +275,111 @@
         }
 
         function switchTab(tab) {
-            ['pemain', 'jadwal', 'klasemen'].forEach(t => {
+            ['peserta', 'keuangan', 'jadwal', 'klasemen'].forEach(t => {
                 document.getElementById(`panel-${t}`).classList.add('hidden');
-                document.getElementById(`tab-${t}`).className = "flex-1 py-3 text-center text-xs sm:text-sm font-semibold text-slate-500 hover:text-emerald-600 rounded-xl transition flex items-center justify-center gap-1.5";
+                document.getElementById(`tab-${t}`).className = "py-3 px-3 text-center text-xs sm:text-sm font-semibold text-slate-500 hover:text-emerald-600 rounded-xl transition flex items-center justify-center gap-1.5";
             });
             document.getElementById(`panel-${tab}`).classList.remove('hidden');
-            document.getElementById(`tab-${tab}`).className = "flex-1 py-3 text-center text-xs sm:text-sm font-semibold text-emerald-600 rounded-xl bg-emerald-50/80 transition flex items-center justify-center gap-1.5";
+            document.getElementById(`tab-${tab}`).className = "py-3 px-3 text-center text-xs sm:text-sm font-semibold text-emerald-600 rounded-xl bg-emerald-50/80 transition flex items-center justify-center gap-1.5";
             
             if(tab === 'klasemen') renderKlasemen();
             if(tab === 'jadwal') renderJadwal();
+            if(tab === 'keuangan') updateKeuangan();
+            if(tab === 'peserta') renderPeserta();
         }
 
         function tambahPemain() {
             const input = document.getElementById('inputNamaPemain');
             const nama = input.value.trim();
-            if(!nama) return alert('Nama pemain tidak boleh kosong!');
+            const tipe = document.getElementById('inputTipePemain').value;
+            if(!nama) return alert('Nama peserta tidak boleh kosong!');
             
-            state.pemain.push({ id: Date.now().toString(), nama });
+            state.pemain.push({ 
+                id: Date.now().toString(), 
+                nama, 
+                tipe, 
+                lunas: false 
+            });
             input.value = '';
             saveData();
-            renderPemain();
+            renderPeserta();
         }
 
         function hapusPemain(id) {
             state.pemain = state.pemain.filter(p => p.id !== id);
             saveData();
-            renderPemain();
+            renderPeserta();
         }
 
-        function hitungMenit(jamStr) {
-            let [j, m] = jamStr.split(':').map(Number);
-            return (j * 60) + m;
-        }
-
-        function updateKalkulatorInfo() {
-            const n = state.pemain.length;
-            const lapangan = state.settings.lapangan;
-            const durasi = state.settings.durasi;
-            const mhsMulai = hitungMenit(state.settings.jamMulai);
-            const mhsSelesai = hitungMenit(state.settings.jamSelesai);
-
-            let totalSewaMenit = mhsSelesai - mhsMulai;
-            if (totalSewaMenit <= 0) totalSewaMenit += 24 * 60;
-
-            let totalMatchKapasitasSewa = Math.floor((totalSewaMenit / durasi) * lapangan);
-
-            if (n < 4) {
-                document.getElementById('infoKapasitas').innerText = "💡 Masukkan minimal 4 pemain untuk simulasi jadwal.";
-                return;
+        function toggleBayar(id) {
+            let p = state.pemain.find(x => x.id === id);
+            if(p) {
+                p.lunas = !p.lunas;
+                saveData();
+                updateKeuangan();
             }
-
-            document.getElementById('infoKapasitas').innerHTML = `⚡ Kapasitas Sewa (${lapangan} Lapangan, ${totalSewaMenit} mnt): Muat hingga <b>~${totalMatchKapasitasSewa} Partai</b>.`;
         }
 
-        function renderPemain() {
-            const tbody = document.getElementById('tabelPemainBody');
+        function renderPeserta() {
+            const tbody = document.getElementById('tabelPesertaBody');
             document.getElementById('jumlahPemain').innerText = state.pemain.length;
             tbody.innerHTML = '';
 
             if(state.pemain.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="3" class="text-center py-6 text-slate-400 text-sm">Belum ada pemain yang ditambahkan.</td></tr>`;
-                updateKalkulatorInfo();
+                tbody.innerHTML = `<tr><td colspan="4" class="text-center py-6 text-slate-400 text-sm">Belum ada peserta terdaftar.</td></tr>`;
                 return;
             }
 
             state.pemain.forEach((p, idx) => {
+                let badgeTipe = p.tipe === 'Member' ? 'bg-blue-50 text-blue-600 border-blue-200' : 'bg-amber-50 text-amber-600 border-amber-200';
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50/50 transition">
                         <td class="py-3 px-3 font-medium text-slate-400 text-xs">${idx + 1}</td>
                         <td class="py-3 px-3 font-semibold text-slate-700">${p.nama}</td>
+                        <td class="py-3 px-3"><span class="px-2.5 py-1 rounded-full text-xs font-medium border ${badgeTipe}">${p.tipe}</span></td>
                         <td class="py-3 px-3 text-center">
                             <button onclick="hapusPemain('${p.id}')" class="text-slate-400 hover:text-red-500 p-1.5 rounded-lg hover:bg-red-50 transition"><i class="fa-solid fa-trash text-xs"></i></button>
                         </td>
                     </tr>
                 `;
             });
-            updateKalkulatorInfo();
+        }
+
+        function updateKeuangan() {
+            const tbody = document.getElementById('tabelKeuanganBody');
+            tbody.innerHTML = '';
+
+            if(state.pemain.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="text-center py-6 text-slate-400 text-sm">Belum ada data keuangan.</td></tr>`;
+                document.getElementById('totalKasLunas').innerText = `Rp 0`;
+                return;
+            }
+
+            let totalKas = 0;
+            state.pemain.forEach((p, idx) => {
+                let nominal = p.tipe === 'Member' ? state.settings.tarifMember : state.settings.tarifVisitor;
+                if(p.lunas) totalKas += nominal;
+
+                let btnBayar = p.lunas 
+                    ? `<button onclick="toggleBayar('${p.id}')" class="bg-emerald-100 text-emerald-700 hover:bg-emerald-200 px-3 py-1.5 rounded-xl text-xs font-bold transition"><i class="fa-solid fa-check mr-1"></i> Lunas</button>`
+                    : `<button onclick="toggleBayar('${p.id}')" class="bg-slate-100 text-slate-500 hover:bg-slate-200 px-3 py-1.5 rounded-xl text-xs font-semibold transition"><i class="fa-solid fa-clock mr-1"></i> Belum</button>`;
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50/50 transition">
+                        <td class="py-3 px-3 font-medium text-slate-400 text-xs">${idx + 1}</td>
+                        <td class="py-3 px-3 font-semibold text-slate-700">${p.nama}</td>
+                        <td class="py-3 px-3 text-xs text-slate-600">${p.tipe} <br><b>Rp ${nominal.toLocaleString('id-ID')}</b></td>
+                        <td class="py-3 px-3 text-center">${btnBayar}</td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('totalKasLunas').innerText = `Rp ${totalKas.toLocaleString('id-ID')}`;
+        }
+
+        function hitungMenit(jamStr) {
+            let [j, m] = jamStr.split(':').map(Number);
+            return (j * 60) + m;
         }
 
         function generateJadwal() {
@@ -312,20 +390,20 @@
 
             let matches = [];
             let matchId = 1;
-            let n = players.length;
-            
             let listPemain = [...players];
-            if(n % 2 !== 0) {
-                listPemain.push({ id: 'bye', nama: 'REST (Istirahat)' });
-                n = listPemain.length;
+            
+            if(listPemain.length % 2 !== 0) {
+                listPemain.push({ id: 'bye', nama: 'REST' });
             }
 
+            let n = listPemain.length;
             let numRounds = n - 1;
             let half = n / 2;
             let lapanganCount = state.settings.lapangan;
             let roundCounter = 1;
 
             let allGeneratedRounds = [];
+
             for(let round = 0; round < numRounds; round++) {
                 let roundMatches = [];
                 for(let i = 0; i < half; i += 2) {
@@ -338,13 +416,18 @@
                     let teamB = [p3, p4].filter(x => x.id !== 'bye');
 
                     if(teamA.length === 2 && teamB.length === 2) {
-                        roundMatches.push({
-                            id: `m_${matchId++}`,
-                            timA: teamA,
-                            timB: teamB,
-                            skorA: '',
-                            skorB: ''
-                        });
+                        let allIds = [...teamA, ...teamB].map(x => x.id);
+                        let uniqueIds = new Set(allIds);
+
+                        if(uniqueIds.size === 4) {
+                            roundMatches.push({
+                                id: `m_${matchId++}`,
+                                timA: teamA,
+                                timB: teamB,
+                                skorA: '',
+                                skorB: ''
+                            });
+                        }
                     }
                 }
 
@@ -367,7 +450,7 @@
                     if (totalSewaMenit <= 0) totalSewaMenit += 24 * 60;
                     
                     let maxMatchSlot = Math.floor((totalSewaMenit / state.settings.durasi) * lapanganCount);
-                    let approxRounds = Math.ceil(maxMatchSlot / Math.floor(n / 4));
+                    let approxRounds = Math.ceil(maxMatchSlot / Math.max(1, Math.floor(players.length / 4)));
                     targetRondeCount = Math.min(allGeneratedRounds.length, Math.max(1, approxRounds));
                 } else {
                     targetRondeCount = Math.min(allGeneratedRounds.length, parseInt(maxBatasanRonde));
@@ -384,6 +467,10 @@
                 }
             }
 
+            if(matches.length === 0) {
+                return alert('Gagal menghasilkan jadwal. Pastikan jumlah pemain minimal 4 orang.');
+            }
+
             state.jadwal = matches;
             saveData();
             switchTab('jadwal');
@@ -394,7 +481,7 @@
             container.innerHTML = '';
 
             if(state.jadwal.length === 0) {
-                container.innerHTML = `<div class="bg-white p-8 rounded-2xl text-center text-slate-400 border border-slate-100 text-sm">Belum ada jadwal. Silakan generate dari menu Pemain.</div>`;
+                container.innerHTML = `<div class="bg-white p-8 rounded-2xl text-center text-slate-400 border border-slate-100 text-sm">Belum ada jadwal. Silakan generate dari menu Peserta.</div>`;
                 return;
             }
 
@@ -441,17 +528,16 @@
             saveData();
         }
 
-        // --- FITUR SHARE KE WHATSAPP ---
-        function bagikanPemainKeWhatsApp() {
+        function bagikanPesertaKeWhatsApp() {
             if(state.pemain.length === 0) {
-                return alert('Belum ada daftar pemain yang ditambahkan.');
+                return alert('Belum ada daftar peserta.');
             }
 
             let text = "🏸 *LIST PESERTA MABAR BADMINTON* 🏸\n";
             text += `Sesi: ${state.settings.jamMulai} - ${state.settings.jamSelesai} (${state.settings.lapangan} Lapangan)\n\n`;
             
             state.pemain.forEach((p, idx) => {
-                text += `${idx + 1}. ${p.nama}\n`;
+                text += `${idx + 1}. ${p.nama} (${p.tipe})\n`;
             });
 
             text += `\nTotal Peserta: *${state.pemain.length} orang*\n`;
@@ -461,9 +547,31 @@
             window.open(`https://api.whatsapp.com/send?text=${encodedText}`, '_blank');
         }
 
+        function bagikanKeuanganKeWhatsApp() {
+            if(state.pemain.length === 0) {
+                return alert('Belum ada data keuangan.');
+            }
+
+            let text = "💰 *REKAP KEUANGAN / KAS MABAR* 💰\n\n";
+            let totalKas = 0;
+
+            state.pemain.forEach((p, idx) => {
+                let nominal = p.tipe === 'Member' ? state.settings.tarifMember : state.settings.tarifVisitor;
+                let statusBayar = p.lunas ? "✅ Lunas" : "❌ Belum";
+                if(p.lunas) totalKas += nominal;
+                text += `${idx + 1}. ${p.nama} (${p.tipe}) - ${statusBayar}\n`;
+            });
+
+            text += `\nTotal Kas Terkumpul: *Rp ${totalKas.toLocaleString('id-ID')}*\n\n`;
+            text += "Silakan yang belum lunas bisa konfirmasi ke Host ya. Terima kasih! 🙏🔥";
+
+            let encodedText = encodeURIComponent(text);
+            window.open(`https://api.whatsapp.com/send?text=${encodedText}`, '_blank');
+        }
+
         function bagikanJadwalKeWhatsApp() {
             if(state.jadwal.length === 0) {
-                return alert('Belum ada jadwal yang di-generate.');
+                return alert('Belum ada jadwal.');
             }
 
             let text = "🏸 *JADWAL ROTA SPARRING BADMINTON* 🏸\n";
@@ -485,7 +593,7 @@
 
         function bagikanKlasemenKeWhatsApp() {
             if(lastSortedStats.length === 0) {
-                return alert('Belum ada data klasemen untuk dibagikan.');
+                return alert('Belum ada data klasemen.');
             }
 
             let text = "🏸 *REKAP KLASEMEN SPARRING BADMINTON* 🏸\n";
@@ -570,24 +678,26 @@
         }
 
         function resetData() {
-            if(confirm('Yakin ingin mereset seluruh data pemain, jadwal, dan skor?')) {
+            if(confirm('Yakin ingin mereset seluruh data peserta, keuangan, jadwal, dan skor?')) {
                 localStorage.removeItem('rota_pemain');
                 localStorage.removeItem('rota_jadwal');
                 localStorage.removeItem('rota_settings');
                 state.pemain = [];
                 state.jadwal = [];
-                state.settings = { lapangan: 3, jamMulai: '19:00', jamSelesai: '22:00', durasi: 15, batasRonde: 'auto' };
+                state.settings = { lapangan: 3, jamMulai: '19:00', jamSelesai: '22:00', durasi: 15, batasRonde: 'auto', tarifMember: 35000, tarifVisitor: 45000 };
                 document.getElementById('inputJumlahLapangan').value = 3;
                 document.getElementById('inputJamMulai').value = '19:00';
                 document.getElementById('inputJamSelesai').value = '22:00';
-                document.getElementById('inputDurasiPartai').value = 15;
+                document.getElementById('tarifMember').value = 35000;
+                document.getElementById('tarifVisitor').value = 45000;
                 document.getElementById('inputBatasRonde').value = 'auto';
-                renderPemain();
-                switchTab('pemain');
+                renderPeserta();
+                switchTab('peserta');
             }
         }
 
-        renderPemain();
+        renderPeserta();
     </script>
 </body>
 </html>
+
