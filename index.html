@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rota Badminton Manager</title>
+    <title>Rota Badminton Manager Pro</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- Google Fonts: Poppins -->
@@ -12,106 +12,134 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { font-family: 'Poppins', sans-serif; }
+        .court-bg-light {
+            background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
+        }
     </style>
 </head>
-<body class="bg-slate-100 text-slate-800 min-h-screen pb-16">
+<body class="bg-slate-50 text-slate-800 min-h-screen pb-20">
 
-    <!-- Header -->
-    <header class="bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-lg py-5 px-6 mb-6">
-        <div class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-            <div class="flex items-center gap-3">
-                <div class="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20 shadow-inner">
-                    <i class="fa-solid fa-shuttlecock text-2xl text-amber-300"></i>
+    <!-- Header / Navigasi Atas (Tema Terang Elegan) -->
+    <header class="court-bg-light text-white shadow-md py-5 px-6 mb-6">
+        <div class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div class="flex items-center gap-3.5">
+                <div class="w-12 h-12 bg-white/15 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20 shadow-inner">
+                    <i class="fa-solid fa-shuttlecock text-2xl text-amber-300 animate-bounce"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-white">Rota Badminton</h1>
-                    <p class="text-xs text-emerald-100 font-medium tracking-wider uppercase">Host & Double Pairing Manager</p>
+                    <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
+                        Rota Badminton Pro <span class="text-[10px] bg-amber-400 text-emerald-950 px-2 py-0.5 rounded-md font-extrabold">V3.1</span>
+                    </h1>
+                    <p class="text-xs text-emerald-100 font-medium tracking-wider uppercase">Smart Host & Matchmaking System</p>
                 </div>
             </div>
-            <span class="text-xs bg-emerald-800/60 backdrop-blur-xs border border-emerald-500/30 px-3.5 py-1.5 rounded-xl font-medium tracking-wide flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Host Control Active
-            </span>
+            <div class="flex items-center gap-2 bg-emerald-800/60 backdrop-blur-xs border border-emerald-400/30 px-3.5 py-1.5 rounded-xl text-xs font-medium text-emerald-50">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-300 animate-ping"></span>
+                <span>Sesi Mabar Aktif</span>
+            </div>
         </div>
     </header>
 
     <main class="max-w-4xl mx-auto px-4 space-y-6">
 
-        <!-- Tab Navigasi (Sekarang dibagi jadi 4 menu agar lebih rapi) -->
-        <div class="grid grid-cols-2 sm:flex border-b border-slate-200 bg-white rounded-2xl shadow-xs overflow-hidden p-1 gap-1">
-            <button onclick="switchTab('peserta')" id="tab-peserta" class="py-3 px-3 text-center text-xs sm:text-sm font-semibold text-emerald-600 rounded-xl bg-emerald-50/80 transition flex items-center justify-center gap-1.5">
+        <!-- Tab Navigasi Utama -->
+        <div class="grid grid-cols-2 sm:flex border border-slate-200 bg-white rounded-2xl shadow-sm overflow-hidden p-1.5 gap-1.5">
+            <button onclick="switchTab('peserta')" id="tab-peserta" class="py-3 px-3 text-center text-xs sm:text-sm font-semibold text-emerald-600 rounded-xl bg-emerald-50 transition flex items-center justify-center gap-2 border border-emerald-200/60">
                 <i class="fa-solid fa-users"></i> Peserta
             </button>
-            <button onclick="switchTab('keuangan')" id="tab-keuangan" class="py-3 px-3 text-center text-xs sm:text-sm font-semibold text-slate-500 hover:text-emerald-600 rounded-xl transition flex items-center justify-center gap-1.5">
-                <i class="fa-solid fa-wallet"></i> Keuangan
+            <button onclick="switchTab('keuangan')" id="tab-keuangan" class="py-3 px-3 text-center text-xs sm:text-sm font-semibold text-slate-500 hover:text-emerald-600 rounded-xl transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-wallet"></i> Keuangan & Kas
             </button>
-            <button onclick="switchTab('jadwal')" id="tab-jadwal" class="py-3 px-3 text-center text-xs sm:text-sm font-semibold text-slate-500 hover:text-emerald-600 rounded-xl transition flex items-center justify-center gap-1.5">
-                <i class="fa-solid fa-calendar-days"></i> Jadwal
+            <button onclick="switchTab('jadwal')" id="tab-jadwal" class="py-3 px-3 text-center text-xs sm:text-sm font-semibold text-slate-500 hover:text-emerald-600 rounded-xl transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-calendar-days"></i> Lapangan & Jadwal
             </button>
-            <button onclick="switchTab('klasemen')" id="tab-klasemen" class="py-3 px-3 text-center text-xs sm:text-sm font-semibold text-slate-500 hover:text-emerald-600 rounded-xl transition flex items-center justify-center gap-1.5">
+            <button onclick="switchTab('klasemen')" id="tab-klasemen" class="py-3 px-3 text-center text-xs sm:text-sm font-semibold text-slate-500 hover:text-emerald-600 rounded-xl transition flex items-center justify-center gap-2">
                 <i class="fa-solid fa-trophy"></i> Klasemen
             </button>
         </div>
 
-        <!-- 1. PANEL PESERTA & PENGATURAN -->
+        <!-- 1. PANEL PESERTA & PENGATURAN MATCHMAKING -->
         <section id="panel-peserta" class="space-y-4">
-            <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-xs border border-slate-100 space-y-4">
-                <h2 class="text-base sm:text-lg font-bold text-slate-700 flex items-center gap-2">
-                    <div class="w-8 h-8 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
-                        <i class="fa-solid fa-clock text-sm"></i>
+            <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-200/80 space-y-4">
+                <h2 class="text-base sm:text-lg font-bold text-slate-800 flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 border border-emerald-200">
+                        <i class="fa-solid fa-sliders text-sm"></i>
                     </div>
-                    Pengaturan Sewa & Lapangan
+                    Konfigurasi Sesi & Sistem Pairing
                 </h2>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
                         <label class="block text-xs font-semibold text-slate-500 uppercase mb-1.5">Jumlah Lapangan</label>
-                        <input type="number" id="inputJumlahLapangan" value="3" min="1" class="w-full border border-slate-200 bg-slate-50/50 rounded-xl px-4 py-2.5 text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
+                        <input type="number" id="inputJumlahLapangan" value="3" min="1" class="w-full border border-slate-200 bg-slate-50 rounded-xl px-4 py-2.5 text-sm font-medium focus:bg-white focus:border-emerald-500 focus:outline-none transition">
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-500 uppercase mb-1.5">Jam Mulai</label>
-                        <input type="time" id="inputJamMulai" value="19:00" class="w-full border border-slate-200 bg-slate-50/50 rounded-xl px-4 py-2.5 text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
+                        <input type="time" id="inputJamMulai" value="19:00" class="w-full border border-slate-200 bg-slate-50 rounded-xl px-4 py-2.5 text-sm font-medium focus:bg-white focus:border-emerald-500 focus:outline-none transition">
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-500 uppercase mb-1.5">Jam Selesai</label>
-                        <input type="time" id="inputJamSelesai" value="22:00" class="w-full border border-slate-200 bg-slate-50/50 rounded-xl px-4 py-2.5 text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
+                        <input type="time" id="inputJamSelesai" value="22:00" class="w-full border border-slate-200 bg-slate-50 rounded-xl px-4 py-2.5 text-sm font-medium focus:bg-white focus:border-emerald-500 focus:outline-none transition">
                     </div>
                 </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-1.5">Target Batas Main</label>
-                    <select id="inputBatasRonde" class="w-full border border-slate-200 bg-slate-50/50 rounded-xl px-4 py-2.5 text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
-                        <option value="all">Habiskan Semua Putaran Rota</option>
-                        <option value="auto" selected>Otomatis Sesuaikan Jam Sewa</option>
-                        <option value="3">Maksimal 3 Kali Main</option>
-                        <option value="4">Maksimal 4 Kali Main</option>
-                        <option value="5">Maksimal 5 Kali Main</option>
-                    </select>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase mb-1.5">Mode Pairing / Matchmaking</label>
+                        <select id="inputModePairing" class="w-full border border-slate-200 bg-slate-50 rounded-xl px-4 py-2.5 text-sm font-medium focus:bg-white focus:border-emerald-500 focus:outline-none transition">
+                            <option value="random">🎲 Random Murni (Fun & Rata)</option>
+                            <option value="mix" selected>⚖️ Mix Campuran (Seimbangkan Level Tim)</option>
+                            <option value="level">🎯 Berdasarkan Level (Selevel Bertemu)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase mb-1.5">Batas Maksimal Main</label>
+                        <select id="inputBatasRonde" class="w-full border border-slate-200 bg-slate-50 rounded-xl px-4 py-2.5 text-sm font-medium focus:bg-white focus:border-emerald-500 focus:outline-none transition">
+                            <option value="all">Habiskan Semua Putaran</option>
+                            <option value="auto" selected>Otomatis Sesuai Jam Sewa</option>
+                            <option value="3">Maksimal 3 Kali Main</option>
+                            <option value="4">Maksimal 4 Kali Main</option>
+                            <option value="5">Maksimal 5 Kali Main</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
-            <!-- Daftar Peserta -->
-            <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-xs border border-slate-100 space-y-4">
+            <!-- Form Tambah Peserta -->
+            <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-200/80 space-y-4">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                    <h2 class="text-base sm:text-lg font-bold text-slate-700">Daftar Peserta Mabar</h2>
+                    <h2 class="text-base sm:text-lg font-bold text-slate-800">Daftar Peserta Mabar</h2>
                     <button onclick="bagikanPesertaKeWhatsApp()" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center justify-center gap-2 shadow-sm">
-                        <i class="fa-brands fa-whatsapp text-base"></i> Share List Peserta ke WA
+                        <i class="fa-brands fa-whatsapp text-base"></i> Share List ke WA
                     </button>
                 </div>
                 
-                <div class="grid grid-cols-1 sm:grid-cols-12 gap-2">
-                    <div class="relative sm:col-span-6">
+                <div class="grid grid-cols-1 sm:grid-cols-12 gap-2.5">
+                    <div class="relative sm:col-span-5">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
                             <i class="fa-solid fa-user text-xs"></i>
                         </span>
-                        <input type="text" id="inputNamaPemain" placeholder="Nama peserta..." class="w-full border border-slate-200 bg-slate-50/50 rounded-xl pl-10 pr-4 py-2.5 text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
+                        <input type="text" id="inputNamaPemain" placeholder="Nama peserta..." class="w-full border border-slate-200 bg-slate-50 rounded-xl pl-10 pr-4 py-2.5 text-sm font-medium focus:bg-white focus:border-emerald-500 focus:outline-none transition">
                     </div>
-                    <div class="sm:col-span-3">
-                        <select id="inputTipePemain" class="w-full border border-slate-200 bg-slate-50/50 rounded-xl px-3 py-2.5 text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
+                    <div class="sm:col-span-2">
+                        <select id="inputGender" class="w-full border border-slate-200 bg-slate-50 rounded-xl px-3 py-2.5 text-sm font-medium focus:bg-white focus:border-emerald-500 focus:outline-none transition">
+                            <option value="♂">♂ Cowok</option>
+                            <option value="♀">♀ Cewek</option>
+                        </select>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <select id="inputLevel" class="w-full border border-slate-200 bg-slate-50 rounded-xl px-3 py-2.5 text-sm font-medium focus:bg-white focus:border-emerald-500 focus:outline-none transition">
+                            <option value="Newbie">Newbie</option>
+                            <option value="Beginner" selected>Beginner</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advanced">Advanced</option>
+                        </select>
+                    </div>
+                    <div class="sm:col-span-3 flex gap-2">
+                        <select id="inputTipePemain" class="w-full border border-slate-200 bg-slate-50 rounded-xl px-3 py-2.5 text-sm font-medium focus:bg-white focus:border-emerald-500 focus:outline-none transition">
                             <option value="Member">Member</option>
                             <option value="Visitor">Visitor</option>
                         </select>
-                    </div>
-                    <div class="sm:col-span-3">
-                        <button onclick="tambahPemain()" class="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white py-2.5 rounded-xl text-sm font-semibold shadow-sm shadow-emerald-600/20 transition flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-plus text-xs"></i> Tambah
+                        <button onclick="tambahPemain()" class="bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white px-4 py-2.5 rounded-xl text-sm font-semibold shadow-sm transition flex items-center justify-center">
+                            <i class="fa-solid fa-plus"></i>
                         </button>
                     </div>
                 </div>
@@ -122,40 +150,41 @@
                             <tr class="border-b border-slate-100 text-xs text-slate-400 uppercase tracking-wider">
                                 <th class="py-2.5 px-3">No</th>
                                 <th class="py-2.5 px-3">Nama</th>
-                                <th class="py-2.5 px-3">Tipe</th>
+                                <th class="py-2.5 px-3">Gender / Level</th>
+                                <th class="py-2.5 px-3">Status</th>
                                 <th class="py-2.5 px-3 text-center">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody id="tabelPesertaBody" class="divide-y divide-slate-50 text-sm"></tbody>
+                        <tbody id="tabelPesertaBody" class="divide-y divide-slate-100 text-sm"></tbody>
                     </table>
                 </div>
 
                 <div class="flex flex-col sm:flex-row justify-between items-center gap-3 pt-4 border-t border-slate-100">
                     <span class="text-xs sm:text-sm text-slate-500">Total Peserta: <strong id="jumlahPemain" class="text-slate-800">0</strong> orang</span>
-                    <button onclick="generateJadwal()" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 active:scale-95 text-white px-6 py-3 rounded-xl text-sm font-semibold shadow-sm shadow-blue-600/20 transition flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Jadwal Rota
+                    <button onclick="generateJadwal()" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 active:scale-95 text-white px-6 py-3 rounded-xl text-sm font-semibold shadow-sm transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Jadwal Rota Pro
                     </button>
                 </div>
             </div>
         </section>
 
-        <!-- 2. PANEL KEUANGAN (KAS) -->
+        <!-- 2. PANEL KEUANGAN (DENGAN PENGELUARAN & SALDO KAS) -->
         <section id="panel-keuangan" class="hidden space-y-4">
-            <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-xs border border-slate-100 space-y-4">
+            <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-200/80 space-y-4">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                    <h2 class="text-base sm:text-lg font-bold text-slate-700 flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
+                    <h2 class="text-base sm:text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 border border-emerald-200">
                             <i class="fa-solid fa-wallet text-sm"></i>
                         </div>
-                        Rekap Keuangan & Status Iuran
+                        Pencatatan Keuangan & Kas Mabar
                     </h2>
                     <button onclick="bagikanKeuanganKeWhatsApp()" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center justify-center gap-2 shadow-sm">
                         <i class="fa-brands fa-whatsapp text-base"></i> Share Kas ke WA
                     </button>
                 </div>
 
-                <!-- Pengaturan Tarif -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200/60">
+                <!-- Pengaturan Tarif & Pengeluaran -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
                     <div>
                         <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Tarif Member (Rp)</label>
                         <input type="number" id="tarifMember" value="35000" step="5000" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500">
@@ -164,9 +193,17 @@
                         <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Tarif Visitor (Rp)</label>
                         <input type="number" id="tarifVisitor" value="45000" step="5000" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500">
                     </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Total Biaya Sewa Lapangan (Rp)</label>
+                        <input type="number" id="biayaSewa" value="300000" step="10000" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Total Biaya Beli Kok / Shuttlecock (Rp)</label>
+                        <input type="number" id="biayaKok" value="120000" step="10000" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
                 </div>
 
-                <!-- Tabel Keuangan -->
+                <!-- Tabel Status Bayar -->
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
@@ -177,22 +214,32 @@
                                 <th class="py-2.5 px-3 text-center">Status Bayar</th>
                             </tr>
                         </thead>
-                        <tbody id="tabelKeuanganBody" class="divide-y divide-slate-50 text-sm"></tbody>
+                        <tbody id="tabelKeuanganBody" class="divide-y divide-slate-100 text-sm"></tbody>
                     </table>
                 </div>
 
-                <!-- Total Kas -->
-                <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-2xl flex justify-between items-center">
-                    <span class="text-xs sm:text-sm font-semibold text-emerald-800">Total Kas Terkumpul (Lunas):</span>
-                    <span id="totalKasLunas" class="text-base sm:text-lg font-bold text-emerald-700">Rp 0</span>
+                <!-- Ringkasan Saldo Kas -->
+                <div class="bg-emerald-50 border border-emerald-200 p-5 rounded-2xl space-y-2">
+                    <div class="flex justify-between items-center text-xs sm:text-sm text-slate-600">
+                        <span>Total Pemasukan (Lunas):</span>
+                        <span id="totalKasMasuk" class="font-bold text-emerald-700">Rp 0</span>
+                    </div>
+                    <div class="flex justify-between items-center text-xs sm:text-sm text-slate-600 border-b border-emerald-200/60 pb-2">
+                        <span>Total Pengeluaran (Sewa + Kok):</span>
+                        <span id="totalPengeluaran" class="font-bold text-red-600">Rp 0</span>
+                    </div>
+                    <div class="flex justify-between items-center text-sm sm:text-base font-bold text-slate-800 pt-1">
+                        <span>Sisa Saldo Kas Bersih:</span>
+                        <span id="saldoKasBersih" class="text-lg text-emerald-800">Rp 0</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- 3. PANEL JADWAL & SKOR -->
+        <!-- 3. PANEL JADWAL (TAMPILAN KARTU LAPANGAN PRO) -->
         <section id="panel-jadwal" class="hidden space-y-4">
-            <div class="bg-white p-4 sm:p-5 rounded-2xl shadow-xs border border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                <h2 class="text-base sm:text-lg font-bold text-slate-700">Daftar Partai / Match</h2>
+            <div class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                <h2 class="text-base sm:text-lg font-bold text-slate-800">Live Court & Match Schedule</h2>
                 <div class="flex items-center gap-2 w-full sm:w-auto">
                     <button onclick="bagikanJadwalKeWhatsApp()" class="flex-1 sm:flex-none bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center justify-center gap-2 shadow-sm">
                         <i class="fa-brands fa-whatsapp text-base"></i> Share Jadwal ke WA
@@ -202,15 +249,15 @@
                     </button>
                 </div>
             </div>
-            <div id="containerJadwal" class="space-y-4"></div>
+            <div id="containerJadwal" class="space-y-6"></div>
         </section>
 
         <!-- 4. PANEL KLASEMEN -->
         <section id="panel-klasemen" class="hidden space-y-4">
-            <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-xs border border-slate-100 space-y-4">
+            <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-200/80 space-y-4">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                    <h2 class="text-base sm:text-lg font-bold text-slate-700">Klasemen Sementara</h2>
-                    <button onclick="bagikanKlasemenKeWhatsApp()" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2 shadow-sm shadow-emerald-600/20">
+                    <h2 class="text-base sm:text-lg font-bold text-slate-800">Klasemen & Peringkat Pemain</h2>
+                    <button onclick="bagikanKlasemenKeWhatsApp()" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2 shadow-sm">
                         <i class="fa-brands fa-whatsapp text-lg"></i> Share Klasemen ke WA
                     </button>
                 </div>
@@ -227,7 +274,7 @@
                                 <th class="py-3 px-3 text-center">Total Poin</th>
                             </tr>
                         </thead>
-                        <tbody id="tabelKlasemenBody" class="divide-y divide-slate-50 text-sm"></tbody>
+                        <tbody id="tabelKlasemenBody" class="divide-y divide-slate-100 text-sm"></tbody>
                     </table>
                 </div>
             </div>
@@ -235,14 +282,14 @@
 
     </main>
 
-    <!-- Script Logika Aplikasi -->
+    <!-- Script Logika Aplikasi Pro V3.1 -->
     <script>
         let state = {
-            pemain: JSON.parse(localStorage.getItem('rota_pemain')) || [],
-            jadwal: JSON.parse(localStorage.getItem('rota_jadwal')) || [],
-            settings: JSON.parse(localStorage.getItem('rota_settings')) || { 
+            pemain: JSON.parse(localStorage.getItem('rota_pemain_v31')) || [],
+            jadwal: JSON.parse(localStorage.getItem('rota_jadwal_v31')) || [],
+            settings: JSON.parse(localStorage.getItem('rota_settings_v31')) || { 
                 lapangan: 3, jamMulai: '19:00', jamSelesai: '22:00', durasi: 15, batasRonde: 'auto',
-                tarifMember: 35000, tarifVisitor: 45000 
+                tarifMember: 35000, tarifVisitor: 45000, biayaSewa: 300000, biayaKok: 120000, modePairing: 'mix'
             }
         };
 
@@ -253,34 +300,40 @@
         document.getElementById('inputJamSelesai').value = state.settings.jamSelesai;
         document.getElementById('tarifMember').value = state.settings.tarifMember;
         document.getElementById('tarifVisitor').value = state.settings.tarifVisitor;
+        document.getElementById('biayaSewa').value = state.settings.biayaSewa || 300000;
+        document.getElementById('biayaKok').value = state.settings.biayaKok || 120000;
         document.getElementById('inputBatasRonde').value = state.settings.batasRonde;
+        document.getElementById('inputModePairing').value = state.settings.modePairing || 'mix';
 
-        ['inputJumlahLapangan', 'inputJamMulai', 'inputJamSelesai', 'tarifMember', 'tarifVisitor', 'inputBatasRonde'].forEach(id => {
+        ['inputJumlahLapangan', 'inputJamMulai', 'inputJamSelesai', 'tarifMember', 'tarifVisitor', 'biayaSewa', 'biayaKok', 'inputBatasRonde', 'inputModePairing'].forEach(id => {
             document.getElementById(id).addEventListener('change', () => {
                 state.settings.lapangan = parseInt(document.getElementById('inputJumlahLapangan').value) || 1;
                 state.settings.jamMulai = document.getElementById('inputJamMulai').value;
                 state.settings.jamSelesai = document.getElementById('inputJamSelesai').value;
                 state.settings.tarifMember = parseInt(document.getElementById('tarifMember').value) || 0;
                 state.settings.tarifVisitor = parseInt(document.getElementById('tarifVisitor').value) || 0;
+                state.settings.biayaSewa = parseInt(document.getElementById('biayaSewa').value) || 0;
+                state.settings.biayaKok = parseInt(document.getElementById('biayaKok').value) || 0;
                 state.settings.batasRonde = document.getElementById('inputBatasRonde').value;
+                state.settings.modePairing = document.getElementById('inputModePairing').value;
                 saveData();
                 updateKeuangan();
             });
         });
 
         function saveData() {
-            localStorage.setItem('rota_pemain', JSON.stringify(state.pemain));
-            localStorage.setItem('rota_jadwal', JSON.stringify(state.jadwal));
-            localStorage.setItem('rota_settings', JSON.stringify(state.settings));
+            localStorage.setItem('rota_pemain_v31', JSON.stringify(state.pemain));
+            localStorage.setItem('rota_jadwal_v31', JSON.stringify(state.jadwal));
+            localStorage.setItem('rota_settings_v31', JSON.stringify(state.settings));
         }
 
         function switchTab(tab) {
             ['peserta', 'keuangan', 'jadwal', 'klasemen'].forEach(t => {
                 document.getElementById(`panel-${t}`).classList.add('hidden');
-                document.getElementById(`tab-${t}`).className = "py-3 px-3 text-center text-xs sm:text-sm font-semibold text-slate-500 hover:text-emerald-600 rounded-xl transition flex items-center justify-center gap-1.5";
+                document.getElementById(`tab-${t}`).className = "py-3 px-3 text-center text-xs sm:text-sm font-semibold text-slate-500 hover:text-emerald-600 rounded-xl transition flex items-center justify-center gap-2";
             });
             document.getElementById(`panel-${tab}`).classList.remove('hidden');
-            document.getElementById(`tab-${tab}`).className = "py-3 px-3 text-center text-xs sm:text-sm font-semibold text-emerald-600 rounded-xl bg-emerald-50/80 transition flex items-center justify-center gap-1.5";
+            document.getElementById(`tab-${tab}`).className = "py-3 px-3 text-center text-xs sm:text-sm font-semibold text-emerald-600 rounded-xl bg-emerald-50 transition flex items-center justify-center gap-2 border border-emerald-200/60";
             
             if(tab === 'klasemen') renderKlasemen();
             if(tab === 'jadwal') renderJadwal();
@@ -291,12 +344,17 @@
         function tambahPemain() {
             const input = document.getElementById('inputNamaPemain');
             const nama = input.value.trim();
+            const gender = document.getElementById('inputGender').value;
+            const level = document.getElementById('inputLevel').value;
             const tipe = document.getElementById('inputTipePemain').value;
+            
             if(!nama) return alert('Nama peserta tidak boleh kosong!');
             
             state.pemain.push({ 
                 id: Date.now().toString(), 
                 nama, 
+                gender, 
+                level, 
                 tipe, 
                 lunas: false 
             });
@@ -326,17 +384,24 @@
             tbody.innerHTML = '';
 
             if(state.pemain.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="text-center py-6 text-slate-400 text-sm">Belum ada peserta terdaftar.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="text-center py-6 text-slate-400 text-sm">Belum ada peserta terdaftar.</td></tr>`;
                 return;
             }
 
             state.pemain.forEach((p, idx) => {
-                let badgeTipe = p.tipe === 'Member' ? 'bg-blue-50 text-blue-600 border-blue-200' : 'bg-amber-50 text-amber-600 border-amber-200';
+                let badgeGender = p.gender === '♂' ? 'bg-blue-50 text-blue-600 border-blue-200' : 'bg-pink-50 text-pink-600 border-pink-200';
+                let levelColors = { 'Newbie': 'bg-slate-100 text-slate-700', 'Beginner': 'bg-cyan-50 text-cyan-700', 'Intermediate': 'bg-amber-50 text-amber-700', 'Advanced': 'bg-rose-50 text-rose-700' };
+                let badgeLevel = levelColors[p.level] || 'bg-slate-100 text-slate-700';
+                
                 tbody.innerHTML += `
-                    <tr class="hover:bg-slate-50/50 transition">
+                    <tr class="hover:bg-slate-50 transition">
                         <td class="py-3 px-3 font-medium text-slate-400 text-xs">${idx + 1}</td>
-                        <td class="py-3 px-3 font-semibold text-slate-700">${p.nama}</td>
-                        <td class="py-3 px-3"><span class="px-2.5 py-1 rounded-full text-xs font-medium border ${badgeTipe}">${p.tipe}</span></td>
+                        <td class="py-3 px-3 font-semibold text-slate-800">${p.nama} <span class="text-xs text-slate-400 font-normal">(${p.tipe})</span></td>
+                        <td class="py-3 px-3 space-x-1.5">
+                            <span class="px-2 py-0.5 rounded-md text-xs font-bold border ${badgeGender}">${p.gender}</span>
+                            <span class="px-2 py-0.5 rounded-md text-xs font-semibold ${badgeLevel}">${p.level}</span>
+                        </td>
+                        <td class="py-3 px-3 text-xs text-slate-600">${p.lunas ? '✅ Lunas' : '❌ Belum'}</td>
                         <td class="py-3 px-3 text-center">
                             <button onclick="hapusPemain('${p.id}')" class="text-slate-400 hover:text-red-500 p-1.5 rounded-lg hover:bg-red-50 transition"><i class="fa-solid fa-trash text-xs"></i></button>
                         </td>
@@ -351,7 +416,9 @@
 
             if(state.pemain.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="4" class="text-center py-6 text-slate-400 text-sm">Belum ada data keuangan.</td></tr>`;
-                document.getElementById('totalKasLunas').innerText = `Rp 0`;
+                document.getElementById('totalKasMasuk').innerText = `Rp 0`;
+                document.getElementById('totalPengeluaran').innerText = `Rp 0`;
+                document.getElementById('saldoKasBersih').innerText = `Rp 0`;
                 return;
             }
 
@@ -365,27 +432,37 @@
                     : `<button onclick="toggleBayar('${p.id}')" class="bg-slate-100 text-slate-500 hover:bg-slate-200 px-3 py-1.5 rounded-xl text-xs font-semibold transition"><i class="fa-solid fa-clock mr-1"></i> Belum</button>`;
 
                 tbody.innerHTML += `
-                    <tr class="hover:bg-slate-50/50 transition">
+                    <tr class="hover:bg-slate-50 transition">
                         <td class="py-3 px-3 font-medium text-slate-400 text-xs">${idx + 1}</td>
-                        <td class="py-3 px-3 font-semibold text-slate-700">${p.nama}</td>
-                        <td class="py-3 px-3 text-xs text-slate-600">${p.tipe} <br><b>Rp ${nominal.toLocaleString('id-ID')}</b></td>
+                        <td class="py-3 px-3 font-semibold text-slate-800">${p.nama}</td>
+                        <td class="py-3 px-3 text-xs text-slate-500">${p.tipe} <br><b class="text-slate-700">Rp ${nominal.toLocaleString('id-ID')}</b></td>
                         <td class="py-3 px-3 text-center">${btnBayar}</td>
                     </tr>
                 `;
             });
 
-            document.getElementById('totalKasLunas').innerText = `Rp ${totalKas.toLocaleString('id-ID')}`;
-        }
+            let totalPengeluaran = (state.settings.biayaSewa || 0) + (state.settings.biayaKok || 0);
+            let saldoBersih = totalKas - totalPengeluaran;
 
-        function hitungMenit(jamStr) {
-            let [j, m] = jamStr.split(':').map(Number);
-            return (j * 60) + m;
+            document.getElementById('totalKasMasuk').innerText = `Rp ${totalKas.toLocaleString('id-ID')}`;
+            document.getElementById('totalPengeluaran').innerText = `Rp ${totalPengeluaran.toLocaleString('id-ID')}`;
+            let saldoEl = document.getElementById('saldoKasBersih');
+            saldoEl.innerText = `Rp ${saldoBersih.toLocaleString('id-ID')}`;
+            saldoEl.className = saldoBersih >= 0 ? "text-lg text-emerald-700 font-bold" : "text-lg text-red-600 font-bold";
         }
 
         function generateJadwal() {
-            const players = [...state.pemain];
+            let players = [...state.pemain];
             if(players.length < 4) {
                 return alert('Minimal dibutuhkan 4 pemain untuk membuat jadwal rotasi ganda!');
+            }
+
+            let mode = state.settings.modePairing;
+            if(mode === 'level') {
+                const rankLevel = { 'Advanced': 4, 'Intermediate': 3, 'Beginner': 2, 'Newbie': 1 };
+                players.sort((a, b) => (rankLevel[b.level] || 2) - (rankLevel[a.level] || 2));
+            } else {
+                players.sort(() => Math.random() - 0.5);
             }
 
             let matches = [];
@@ -393,7 +470,7 @@
             let listPemain = [...players];
             
             if(listPemain.length % 2 !== 0) {
-                listPemain.push({ id: 'bye', nama: 'REST' });
+                listPemain.push({ id: 'bye', nama: 'REST', gender: '', level: '' });
             }
 
             let n = listPemain.length;
@@ -444,14 +521,7 @@
 
             if (maxBatasanRonde !== 'all') {
                 if (maxBatasanRonde === 'auto') {
-                    let mhsMulai = hitungMenit(state.settings.jamMulai);
-                    let mhsSelesai = hitungMenit(state.settings.jamSelesai);
-                    let totalSewaMenit = mhsSelesai - mhsMulai;
-                    if (totalSewaMenit <= 0) totalSewaMenit += 24 * 60;
-                    
-                    let maxMatchSlot = Math.floor((totalSewaMenit / state.settings.durasi) * lapanganCount);
-                    let approxRounds = Math.ceil(maxMatchSlot / Math.max(1, Math.floor(players.length / 4)));
-                    targetRondeCount = Math.min(allGeneratedRounds.length, Math.max(1, approxRounds));
+                    targetRondeCount = Math.min(allGeneratedRounds.length, Math.max(1, Math.floor(players.length / 2)));
                 } else {
                     targetRondeCount = Math.min(allGeneratedRounds.length, parseInt(maxBatasanRonde));
                 }
@@ -481,34 +551,60 @@
             container.innerHTML = '';
 
             if(state.jadwal.length === 0) {
-                container.innerHTML = `<div class="bg-white p-8 rounded-2xl text-center text-slate-400 border border-slate-100 text-sm">Belum ada jadwal. Silakan generate dari menu Peserta.</div>`;
+                container.innerHTML = `<div class="bg-white p-8 rounded-2xl text-center text-slate-400 border border-slate-200 text-sm">Belum ada jadwal. Silakan generate dari menu Peserta.</div>`;
                 return;
             }
 
             state.jadwal.forEach((r, index) => {
                 let htmlPartai = '';
                 r.partai.forEach((m, mIdx) => {
+                    let renderPlayerBadge = (p) => {
+                        let col = p.gender === '♂' ? 'text-blue-600' : 'text-pink-600';
+                        return `<div class="flex items-center justify-between py-1.5 px-3 bg-slate-50 rounded-xl border border-slate-200/60 mb-1.5">
+                            <span class="font-semibold text-slate-800 text-sm">${p.nama} <span class="${col} text-xs font-bold">${p.gender}</span></span>
+                            <span class="text-[10px] bg-white text-slate-600 px-2 py-0.5 rounded border border-slate-200 font-medium">${p.level}</span>
+                        </div>`;
+                    };
+
                     htmlPartai += `
-                        <div class="bg-white border border-slate-100 p-4 rounded-xl shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3">
-                            <div class="text-xs font-semibold text-slate-400 sm:w-20">Lap ${mIdx + 1}</div>
-                            <div class="flex-1 text-center sm:text-right font-medium text-sm text-slate-700">
-                                <span class="text-emerald-600 font-bold">${m.timA[0].nama}</span> & <span class="text-emerald-600 font-bold">${m.timA[1].nama}</span>
+                        <div class="bg-white border border-slate-200/80 p-5 rounded-2xl shadow-sm space-y-4">
+                            <div class="flex justify-between items-center border-b border-slate-100 pb-2.5">
+                                <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider"><i class="fa-solid fa-map-pin mr-1"></i> Lapangan ${mIdx + 1}</span>
+                                <span class="text-[11px] text-slate-400 font-medium">Gelombang ${index + 1}</span>
                             </div>
-                            <div class="flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-100">
-                                <input type="number" min="0" value="${m.skorA}" onchange="updateSkor('${m.id}', 'A', this.value)" class="w-12 text-center bg-white border border-slate-200 rounded-lg py-1 text-sm font-bold text-slate-800 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                                <span class="text-slate-300 font-bold text-xs">VS</span>
-                                <input type="number" min="0" value="${m.skorB}" onchange="updateSkor('${m.id}', 'B', this.value)" class="w-12 text-center bg-white border border-slate-200 rounded-lg py-1 text-sm font-bold text-slate-800 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                            </div>
-                            <div class="flex-1 text-center sm:text-left font-medium text-sm text-slate-700">
-                                <span class="text-blue-600 font-bold">${m.timB[0].nama}</span> & <span class="text-blue-600 font-bold">${m.timB[1].nama}</span>
+                            <div class="grid grid-cols-1 md:grid-cols-11 gap-3 items-center">
+                                <!-- Tim A -->
+                                <div class="md:col-span-5 bg-emerald-50/50 border border-emerald-200/60 p-3 rounded-xl space-y-1">
+                                    <div class="text-[10px] font-bold text-emerald-700 uppercase tracking-wider mb-1">Tim A</div>
+                                    ${renderPlayerBadge(m.timA[0])}
+                                    ${renderPlayerBadge(m.timA[1])}
+                                </div>
+                                <!-- VS & Skor -->
+                                <div class="md:col-span-1 flex flex-col items-center justify-center gap-1.5 my-1 md:my-0">
+                                    <span class="text-xs font-black text-slate-400">VS</span>
+                                    <div class="flex gap-1">
+                                        <input type="number" min="0" value="${m.skorA}" onchange="updateSkor('${m.id}', 'A', this.value)" class="w-10 text-center bg-slate-50 border border-slate-300 rounded-lg py-1 text-xs font-bold text-emerald-700 focus:outline-none focus:border-emerald-500">
+                                        <input type="number" min="0" value="${m.skorB}" onchange="updateSkor('${m.id}', 'B', this.value)" class="w-10 text-center bg-slate-50 border border-slate-300 rounded-lg py-1 text-xs font-bold text-blue-700 focus:outline-none focus:border-emerald-500">
+                                    </div>
+                                </div>
+                                <!-- Tim B -->
+                                <div class="md:col-span-5 bg-blue-50/50 border border-blue-200/60 p-3 rounded-xl space-y-1">
+                                    <div class="text-[10px] font-bold text-blue-700 uppercase tracking-wider mb-1">Tim B</div>
+                                    ${renderPlayerBadge(m.timB[0])}
+                                    ${renderPlayerBadge(m.timB[1])}
+                                </div>
                             </div>
                         </div>
                     `;
                 });
 
                 container.innerHTML += `
-                    <div class="space-y-3">
-                        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">Gelombang / Sesi Partai ${index + 1}</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-2">
+                            <div class="h-px bg-slate-200 flex-1"></div>
+                            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest px-2">Sesi Ronde ${index + 1}</span>
+                            <div class="h-px bg-slate-200 flex-1"></div>
+                        </div>
                         ${htmlPartai}
                     </div>
                 `;
@@ -529,87 +625,55 @@
         }
 
         function bagikanPesertaKeWhatsApp() {
-            if(state.pemain.length === 0) {
-                return alert('Belum ada daftar peserta.');
-            }
-
-            let text = "🏸 *LIST PESERTA MABAR BADMINTON* 🏸\n";
-            text += `Sesi: ${state.settings.jamMulai} - ${state.settings.jamSelesai} (${state.settings.lapangan} Lapangan)\n\n`;
-            
+            if(state.pemain.length === 0) return alert('Belum ada daftar peserta.');
+            let text = "🏸 *LIST PESERTA MABAR BADMINTON* 🏸\n\n";
             state.pemain.forEach((p, idx) => {
-                text += `${idx + 1}. ${p.nama} (${p.tipe})\n`;
+                text += `${idx + 1}. ${p.nama} (${p.gender} - ${p.level})\n`;
             });
-
-            text += `\nTotal Peserta: *${state.pemain.length} orang*\n`;
-            text += "Sampai ketemu di lapangan! 🔥🏸";
-
-            let encodedText = encodeURIComponent(text);
-            window.open(`https://api.whatsapp.com/send?text=${encodedText}`, '_blank');
+            text += `\nTotal: *${state.pemain.length} orang* 🔥🏸`;
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
         }
 
         function bagikanKeuanganKeWhatsApp() {
-            if(state.pemain.length === 0) {
-                return alert('Belum ada data keuangan.');
-            }
+            if(state.pemain.length === 0) return alert('Belum ada data keuangan.');
+            let totalKas = 0;
+            state.pemain.forEach(p => {
+                if(p.lunas) totalKas += p.tipe === 'Member' ? state.settings.tarifMember : state.settings.tarifVisitor;
+            });
+            let totalPengeluaran = (state.settings.biayaSewa || 0) + (state.settings.biayaKok || 0);
+            let saldoBersih = totalKas - totalPengeluaran;
 
             let text = "💰 *REKAP KEUANGAN / KAS MABAR* 💰\n\n";
-            let totalKas = 0;
-
             state.pemain.forEach((p, idx) => {
-                let nominal = p.tipe === 'Member' ? state.settings.tarifMember : state.settings.tarifVisitor;
-                let statusBayar = p.lunas ? "✅ Lunas" : "❌ Belum";
-                if(p.lunas) totalKas += nominal;
-                text += `${idx + 1}. ${p.nama} (${p.tipe}) - ${statusBayar}\n`;
+                text += `${idx + 1}. ${p.nama} - ${p.lunas ? "✅ Lunas" : "❌ Belum"}\n`;
             });
-
-            text += `\nTotal Kas Terkumpul: *Rp ${totalKas.toLocaleString('id-ID')}*\n\n`;
-            text += "Silakan yang belum lunas bisa konfirmasi ke Host ya. Terima kasih! 🙏🔥";
-
-            let encodedText = encodeURIComponent(text);
-            window.open(`https://api.whatsapp.com/send?text=${encodedText}`, '_blank');
+            text += `\nTotal Pemasukan: Rp ${totalKas.toLocaleString('id-ID')}`;
+            text += `\nTotal Pengeluaran: Rp ${totalPengeluaran.toLocaleString('id-ID')}`;
+            text += `\nSisa Saldo Kas: *Rp ${saldoBersih.toLocaleString('id-ID')}* 🙏🔥`;
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
         }
 
         function bagikanJadwalKeWhatsApp() {
-            if(state.jadwal.length === 0) {
-                return alert('Belum ada jadwal.');
-            }
-
-            let text = "🏸 *JADWAL ROTA SPARRING BADMINTON* 🏸\n";
-            text += `Waktu: ${state.settings.jamMulai} - ${state.settings.jamSelesai} (${state.settings.lapangan} Lapangan)\n\n`;
-
+            if(state.jadwal.length === 0) return alert('Belum ada jadwal.');
+            let text = "🏸 *JADWAL ROTA SPARRING BADMINTON* 🏸\n\n";
             state.jadwal.forEach((r, idx) => {
-                text += `*--- Gelombang ${idx + 1} ---*\n`;
+                text += `*--- Sesi ${idx + 1} ---*\n`;
                 r.partai.forEach((m, mIdx) => {
                     text += `Lap ${mIdx + 1}: ${m.timA[0].nama} & ${m.timA[1].nama} vs ${m.timB[0].nama} & ${m.timB[1].nama}\n`;
                 });
                 text += "\n";
             });
-
-            text += "Mohon siap-siap di pinggir lapangan sesuai giliran ya! 🔥🏸";
-
-            let encodedText = encodeURIComponent(text);
-            window.open(`https://api.whatsapp.com/send?text=${encodedText}`, '_blank');
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
         }
 
         function bagikanKlasemenKeWhatsApp() {
-            if(lastSortedStats.length === 0) {
-                return alert('Belum ada data klasemen.');
-            }
-
-            let text = "🏸 *REKAP KLASEMEN SPARRING BADMINTON* 🏸\n";
-            text += `Sesi: ${state.settings.jamMulai} - ${state.settings.jamSelesai} (${state.settings.lapangan} Lapangan)\n\n`;
-
+            if(lastSortedStats.length === 0) return alert('Belum ada data klasemen.');
+            let text = "🏸 *REKAP KLASEMEN SPARRING BADMINTON* 🏸\n\n";
             lastSortedStats.forEach((s, idx) => {
                 let medal = idx === 0 ? "🥇" : (idx === 1 ? "🥈" : (idx === 2 ? "🥉" : `${idx + 1}.`));
-                let diffStr = s.selisihPoin > 0 ? `+${s.selisihPoin}` : `${s.selisihPoin}`;
-                text += `${medal} *${s.nama}*\n`;
-                text += `   Main: ${s.main} | M: ${s.menang} | K: ${s.kalah} | Poin: ${diffStr} (Tot: ${s.totalPoin})\n`;
+                text += `${medal} *${s.nama}* (Main: ${s.main} | M: ${s.menang} | K: ${s.kalah} | Poin: ${s.selisihPoin})\n`;
             });
-
-            text += "\nTerima kasih semuanya, sampai jumpa di sesi mabar berikutnya! 🔥🏸";
-
-            let encodedText = encodeURIComponent(text);
-            window.open(`https://api.whatsapp.com/send?text=${encodedText}`, '_blank');
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
         }
 
         function renderKlasemen() {
@@ -662,11 +726,11 @@
             }
 
             lastSortedStats.forEach((s, idx) => {
-                let badgeColor = idx === 0 ? 'bg-amber-100 text-amber-700' : (idx === 1 ? 'bg-slate-100 text-slate-700' : (idx === 2 ? 'bg-orange-100 text-orange-700' : 'text-slate-500'));
+                let badgeColor = idx === 0 ? 'bg-amber-100 text-amber-700 border-amber-300' : (idx === 1 ? 'bg-slate-100 text-slate-700' : (idx === 2 ? 'bg-orange-100 text-orange-700 border-orange-300' : 'text-slate-500'));
                 tbody.innerHTML += `
-                    <tr class="hover:bg-slate-50/50 transition">
-                        <td class="py-3 px-3 font-bold"><span class="w-6 h-6 inline-flex items-center justify-center rounded-full text-xs font-semibold ${badgeColor}">${idx + 1}</span></td>
-                        <td class="py-3 px-3 font-semibold text-slate-700">${s.nama}</td>
+                    <tr class="hover:bg-slate-50 transition">
+                        <td class="py-3 px-3 font-bold"><span class="w-6 h-6 inline-flex items-center justify-center rounded-full text-xs font-semibold border ${badgeColor}">${idx + 1}</span></td>
+                        <td class="py-3 px-3 font-semibold text-slate-800">${s.nama}</td>
                         <td class="py-3 px-3 text-center text-slate-600">${s.main}</td>
                         <td class="py-3 px-3 text-center text-emerald-600 font-bold">${s.menang}</td>
                         <td class="py-3 px-3 text-center text-red-500">${s.kalah}</td>
@@ -678,21 +742,11 @@
         }
 
         function resetData() {
-            if(confirm('Yakin ingin mereset seluruh data peserta, keuangan, jadwal, dan skor?')) {
-                localStorage.removeItem('rota_pemain');
-                localStorage.removeItem('rota_jadwal');
-                localStorage.removeItem('rota_settings');
-                state.pemain = [];
-                state.jadwal = [];
-                state.settings = { lapangan: 3, jamMulai: '19:00', jamSelesai: '22:00', durasi: 15, batasRonde: 'auto', tarifMember: 35000, tarifVisitor: 45000 };
-                document.getElementById('inputJumlahLapangan').value = 3;
-                document.getElementById('inputJamMulai').value = '19:00';
-                document.getElementById('inputJamSelesai').value = '22:00';
-                document.getElementById('tarifMember').value = 35000;
-                document.getElementById('tarifVisitor').value = 45000;
-                document.getElementById('inputBatasRonde').value = 'auto';
-                renderPeserta();
-                switchTab('peserta');
+            if(confirm('Yakin ingin mereset seluruh data?')) {
+                localStorage.removeItem('rota_pemain_v31');
+                localStorage.removeItem('rota_jadwal_v31');
+                localStorage.removeItem('rota_settings_v31');
+                location.reload();
             }
         }
 
@@ -700,4 +754,3 @@
     </script>
 </body>
 </html>
-
